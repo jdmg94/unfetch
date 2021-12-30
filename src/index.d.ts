@@ -14,13 +14,13 @@ declare namespace unfetch {
   export type IsomorphicRequestInit = RequestInit | NodeRequestInit;
 }
 
-type UnfetchResponse = {
+type UnfetchResponse<T = any> = {
 	ok: boolean,
 	statusText: string,
 	status: number,
 	url: string,
 	text: () => Promise<string>,
-	json: () => Promise<any>,
+	json: () => Promise<T>,
 	blob: () => Promise<Blob>,
 	clone: () => UnfetchResponse,
 	headers: {
@@ -31,7 +31,7 @@ type UnfetchResponse = {
 	}
 }
 
-type Unfetch = (
+type Unfetch<T> = (
 	url: string,
 	options?: {
 		method?: string,
@@ -39,7 +39,7 @@ type Unfetch = (
 		credentials?: 'include' | 'omit',
 		body?: Parameters<XMLHttpRequest["send"]>[0]
 	}
-) => Promise<UnfetchResponse>
+) => Promise<UnfetchResponse<T>>
 
 declare const unfetch: Unfetch;
 
